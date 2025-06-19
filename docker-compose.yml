@@ -1,0 +1,53 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  oracle-db:
+    # Using a pre-built Oracle XE image.
+    # Make sure you've already pulled this image manually (see next step 4.2).
+    image: gvenzl/oracle-xe:21-full
+    ports:
+      - "1521:1521" # Host port:Container port (default Oracle listener port)
+    environment:
+      # REQUIRED: Set a strong password for SYS, SYSTEM, PDBADMIN.
+      # Change 'your_oracle_password_here' to something secure!
+      ORACLE_PASSWORD: your_oracle_password_here
+      APP_USER: app_user
+      APP_USER_PASSWORD: your_app_user_password_here # Password for the app_user, CHANGE THIS!
+      ORACLE_DATABASE: XE
+      ORACLE_PDB: XEPDB1 # Default PDB for Oracle XE
+    volumes:
+      - oracle_data:/opt/oracle/oradata # Persistent data volume
+    healthcheck:
+      test: ["CMD-SHELL", "ls /opt/oracle/oradata/XE/system01.dbf"] # Check for a core DB file
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s # Give Oracle enough time to start
+    restart: unless-stopped
+
+  python-app:
+    build:
+      context: . # Build context is the current directory (where Dockerfile is)
+      dockerfile: Dockerfile # Name of the Dockerfile for the Python app
+    ports:
+      - "5001:5000" # Flask default port
+    environment:
+      # These environment variables will be injected into your Python app container
+      # For development, 'DB_HOST' is the name of the Oracle DB service in docker-compose
+      DB_USER: app_user
+      DB_PASSWORD: your_app_user_password_here # Use the same password as defined in oracle-db service
+      DB_HOST: oracle-db # This is the service name defined above in docker-compose
+      DB_PORT: 1521
+      DB_SERVICE_NAME: XEPDB1
+      FLASK_APP: app.py
+      FLASK_ENV: development # Set to 'production' for deployment
+    volumes:
+      - .:/app # Mount your current project directory into the container for live updates
+    depends_on:
+      oracle-db:
+        condition: service_healthy # Wait for the DB to be healthy before starting app
+    restart: unless-stopped
+
+volumes:
+  oracle_data: # Define the named volume for persistent Oracle data

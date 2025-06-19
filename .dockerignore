@@ -1,0 +1,11 @@
+# Ignore virtual environment
+venv/
+
+# Ignore Git metadata
+.git/
+
+# Ignore macOS specific files
+.DS_Store
+
+# Ignore VS Code specific files
+.vscode/
