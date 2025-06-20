@@ -173,6 +173,67 @@ INSERT INTO translations (lang_code, key_name, text_content)
 SELECT 'en', 'current_job_label', 'Current'
 WHERE NOT EXISTS (SELECT 1 FROM translations WHERE lang_code = 'en' AND key_name = 'current_job_label');
 
+-- db_init/init.sql (adicione no final)
+
+-- Inserir traduções para Espanhol (ES)
+INSERT INTO translations (lang_code, key_name, text_content)
+SELECT 'es', 'hero_greeting', 'Hola, soy'
+WHERE NOT EXISTS (SELECT 1 FROM translations WHERE lang_code = 'es' AND key_name = 'hero_greeting');
+
+INSERT INTO translations (lang_code, key_name, text_content)
+SELECT 'es', 'about_title', 'Acerca de Mí'
+WHERE NOT EXISTS (SELECT 1 FROM translations WHERE lang_code = 'es' AND key_name = 'about_title');
+
+INSERT INTO translations (lang_code, key_name, text_content)
+SELECT 'es', 'experience_title', 'Experiencia Profesional'
+WHERE NOT EXISTS (SELECT 1 FROM translations WHERE lang_code = 'es' AND key_name = 'experience_title');
+
+INSERT INTO translations (lang_code, key_name, text_content)
+SELECT 'es', 'projects_title', 'Mis Proyectos'
+WHERE NOT EXISTS (SELECT 1 FROM translations WHERE lang_code = 'es' AND key_name = 'projects_title');
+
+INSERT INTO translations (lang_code, key_name, text_content)
+SELECT 'es', 'contact_title', 'Contacto'
+WHERE NOT EXISTS (SELECT 1 FROM translations WHERE lang_code = 'es' AND key_name = 'contact_title');
+
+INSERT INTO translations (lang_code, key_name, text_content)
+SELECT 'es', 'view_project', 'Ver Proyecto'
+WHERE NOT EXISTS (SELECT 1 FROM translations WHERE lang_code = 'es' AND key_name = 'view_project');
+
+INSERT INTO translations (lang_code, key_name, text_content)
+SELECT 'es', 'current_job_label', 'Actual'
+WHERE NOT EXISTS (SELECT 1 FROM translations WHERE lang_code = 'es' AND key_name = 'current_job_label');
+
+
+-- EXEMPLO para Português (BR) - Você precisa adicionar TODAS as chaves
+INSERT INTO translations (lang_code, key_name, text_content)
+SELECT 'pt-BR', 'hero_greeting', 'Olá, eu sou'
+WHERE NOT EXISTS (SELECT 1 FROM translations WHERE lang_code = 'pt-BR' AND key_name = 'hero_greeting');
+
+INSERT INTO translations (lang_code, key_name, text_content)
+SELECT 'pt-BR', 'about_title', 'Sobre Mim'
+WHERE NOT EXISTS (SELECT 1 FROM translations WHERE lang_code = 'pt-BR' AND key_name = 'about_title');
+
+INSERT INTO translations (lang_code, key_name, text_content)
+SELECT 'pt-BR', 'experience_title', 'Experiência Profissional'
+WHERE NOT EXISTS (SELECT 1 FROM translations WHERE lang_code = 'pt-BR' AND key_name = 'experience_title');
+
+INSERT INTO translations (lang_code, key_name, text_content)
+SELECT 'pt-BR', 'projects_title', 'Meus Projetos'
+WHERE NOT EXISTS (SELECT 1 FROM translations WHERE lang_code = 'pt-BR' AND key_name = 'projects_title');
+
+INSERT INTO translations (lang_code, key_name, text_content)
+SELECT 'pt-BR', 'contact_title', 'Contato'
+WHERE NOT EXISTS (SELECT 1 FROM translations WHERE lang_code = 'pt-BR' AND key_name = 'contact_title');
+
+INSERT INTO translations (lang_code, key_name, text_content)
+SELECT 'pt-BR', 'view_project', 'Ver Projeto'
+WHERE NOT EXISTS (SELECT 1 FROM translations WHERE lang_code = 'pt-BR' AND key_name = 'view_project');
+
+INSERT INTO translations (lang_code, key_name, text_content)
+SELECT 'pt-BR', 'current_job_label', 'Atual'
+WHERE NOT EXISTS (SELECT 1 FROM translations WHERE lang_code = 'pt-BR' AND key_name = 'current_job_label');
+
 -- Você precisará adicionar o mesmo para 'pt-BR' e 'es'
 -- Exemplo:
 -- INSERT INTO translations (lang_code, key_name, text_content)

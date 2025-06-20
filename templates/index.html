@@ -27,10 +27,10 @@
 
             <nav class="main-nav">
                 <ul>
-                    <h2 class="section-title">{{ translations.get('about_title', 'Sobre Mim') }}</h2>
-                    <h2 class="section-title">{{ translations.get('experience_title', 'Experiência Profissional') }}</h2>
-                    <h2 class="section-title">{{ translations.get('projects_title', 'Meus Projetos') }}</h2>
-                    <h2 class="section-title">{{ translations.get('contact_title', 'Contacto') }}</h2>
+                    <li><a href="#about-me-section">Sobre Mim</a></li>
+                    <li><a href="#experience-section">Experiência</a></li>
+                    <li><a href="#projects-section">Projetos</a></li>
+                    <li><a href="#contact-section">Contacto</a></li>
                 </ul>
             </nav>
             <div class="language-selector">
@@ -87,7 +87,7 @@
             </section>
 
             <section id="projects-section" class="projects-section card animate-slide-up-delay">
-                <h2 class="section-title">{{ translations.get('projects_title', 'Meus Projetos') }}</h2>
+                <h2 class="section-title">{{ translations.get('projects_title', 'Meus Projetos') }}                git push origin main</h2>
                 {% if projects %}
                     <div class="projects-grid">
                         {% for project in projects %}
