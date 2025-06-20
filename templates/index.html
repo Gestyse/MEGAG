@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEGAG - Seu Nome - Data Analyst</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEGAG - Seu Nome - Data Analyst</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>  
+    <header class="main-header">
+        <div class="container header-content">
+            <img src="{{ url_for('static', filename='images/gestyse.png') }}" alt="Sua Foto de Perfil" class="header-profile-img animate-fade-in-slow">
+
+            <nav class="main-nav">
+                <ul>
+                    <h2 class="section-title">{{ translations.get('about_title', 'Sobre Mim') }}</h2>
+                    <h2 class="section-title">{{ translations.get('experience_title', 'Experiência Profissional') }}</h2>
+                    <h2 class="section-title">{{ translations.get('projects_title', 'Meus Projetos') }}</h2>
+                    <h2 class="section-title">{{ translations.get('contact_title', 'Contacto') }}</h2>
+                </ul>
+            </nav>
+            <div class="language-selector">
+                <img src="{{ url_for('static', filename='images/flag_' + current_lang.split('-')[0] + '.png') }}" alt="{{ current_lang }}" class="current-flag">
+                <i class="fas fa-chevron-down language-arrow"></i>
+                <ul class="language-dropdown">
+                    <li><a href="/pt-BR"><img src="{{ url_for('static', filename='images/flag_br.png') }}" alt="Português (BR)"> PT-BR</a></li>
+                    <li><a href="/pt-PT"><img src="{{ url_for('static', filename='images/flag_pt.png') }}" alt="Português (PT)"> PT-PT</a></li>
+                    <li><a href="/es"><img src="{{ url_for('static', filename='images/flag_es.png') }}" alt="Español"> ES</a></li>
+                    <li><a href="/en"><img src="{{ url_for('static', filename='images/flag_en.png') }}" alt="English"> EN</a></li>
+                </ul>
+            </div>
+            </div>
+    </header>
+
+    {% if personal_info and not personal_info.error %}
+    <div id="hero-section" class="hero-section">
+        <div class="container hero-content">
+            <h1 class="animate-fade-in">{{ translations.get('hero_greeting', 'Olá, eu sou') }} <span>{{ personal_info.full_name }}</span></h1>
+            <p class="tagline animate-slide-up">{{ personal_info.title }}</p>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <section id="about-me-section" class="about-me-section card animate-slide-up-delay">
+                <h2 class="section-title">Sobre Mim</h2>
+                <p>{{ personal_info.about_me }}</p>
+            </section>
+
+            <section id="experience-section" class="experience-section card animate-slide-up-delay">
+                <h2 class="section-title">Experiência Profissional</h2>
+                {% if experiences %}
+                    <div class="experience-list">
+                        {% for job in experiences %}
+                            <div class="job-item">
+                                <h3>{{ job.job_title }}</h3>
+                                <p class="company-info">{{ job.company_name }} | {{ job.location }}</p>
+                                <p class="dates">
+                                    {{ job.start_date.strftime('%B %Y') }} -
+                                    {% if job.end_date %}
+                                        {{ job.end_date.strftime('%B %Y') }}
+                                    {% else %}
+                                        Atual
+                                    {% endif %}
+                                </p>
+                                <p class="job-description">{{ job.description }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ translations.get('current_job_label', 'Atual') }}
+                {% endif %}
+            </section>
+
+            <section id="projects-section" class="projects-section card animate-slide-up-delay">
+                <h2 class="section-title">{{ translations.get('projects_title', 'Meus Projetos') }}</h2>
+                {% if projects %}
+                    <div class="projects-grid">
+                        {% for project in projects %}
+                            <div class="project-item">
+                                {% if project.image_url %}
+                                    <div class="project-image-container">
+                                        <img src="{{ project.image_url }}" alt="Imagem do Projeto {{ project.title }}" class="project-image">
+                                    </div>
+                                {% endif %}
+                                <h3 class="project-title">{{ project.title }}</h3>
+                                <p class="project-description">{{ project.description }}</p>
+                                <p class="project-tech">Tecnologias: <span>{{ project.technologies }}</span></p>
+                                {% if project.project_url %}
+                                    <a href="{{ project.project_url }}" target="_blank" class="project-link">{{ translations.get('view_project', 'Ver Projeto') }} <i class="fas fa-external-link-alt"></i></a>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>Nenhum projeto encontrado ou listado.</p>
+                {% endif %}
+            </section>
+
+            <section id="contact-section" class="contact-section card animate-slide-up-delay">
+                <h2 class="section-title">Contato</h2>
+                <ul class="contact-list">
+                    <li><i class="fas fa-envelope icon"></i> Email: <a href="mailto:{{ personal_info.email }}">{{ personal_info.email }}</a></li>
+                    <li><i class="fas fa-phone-alt icon"></i> Telefone: {{ personal_info.phone_number }}</li>
+                    {% if personal_info.linkedin_profile %}
+                        <li><i class="fab fa-linkedin icon"></i> LinkedIn: <a href="{{ personal_info.linkedin_profile }}" target="_blank">linkedin.com/in/{{ personal_info.full_name | lower | replace(' ', '') }}</a></li>
+                    {% endif %}
+                    {% if personal_info.github_profile %}
+                        <li><i class="fab fa-github icon"></i> GitHub: <a href="{{ personal_info.github_profile }}" target="_blank">github.com/{{ personal_info.github_profile.split('/')[-1] }}</a></li>
+                    {% endif %}
+                </ul>
+            </section>
+
+        </div>
+    </div>
+
+    <footer class="footer-section">
+        <div class="container">
+            <p>&copy; {{ current_year }} {{ personal_info.full_name }}. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    {% else %}
+        <div class="error-container">
+            <p class="error-message">
+                {% if personal_info and personal_info.error %}
+                    {{ personal_info.error }}
+                {% else %}
+                    Não foi possível carregar as informações pessoais. Verifique a conexão com o banco de dados.
+                {% endif %}
+            </p>
+        </div>
+    {% endif %}
+</body> </html>
+</html>

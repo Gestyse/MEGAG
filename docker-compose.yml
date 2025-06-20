@@ -1,53 +1,46 @@
 # docker-compose.yml
-version: '3.8'
-
 services:
-  oracle-db:
-    # Using a pre-built Oracle XE image.
-    # Make sure you've already pulled this image manually (see next step 4.2).
-    image: gvenzl/oracle-xe:21-full
+  postgres-db: # O novo nome do serviço para o banco de dados
+    image: postgres:16-alpine # Uma imagem oficial e leve do PostgreSQL, compatível com ARM64
     ports:
-      - "1521:1521" # Host port:Container port (default Oracle listener port)
+      - "5432:5432" # Porta padrão do PostgreSQL (Host:Contêiner)
     environment:
-      # REQUIRED: Set a strong password for SYS, SYSTEM, PDBADMIN.
-      # Change 'your_oracle_password_here' to something secure!
-      ORACLE_PASSWORD: your_oracle_password_here
-      APP_USER: app_user
-      APP_USER_PASSWORD: your_app_user_password_here # Password for the app_user, CHANGE THIS!
-      ORACLE_DATABASE: XE
-      ORACLE_PDB: XEPDB1 # Default PDB for Oracle XE
+      POSTGRES_DB: megag_db # Nome do banco de dados que será criado
+      POSTGRES_USER: app_user # Usuário para a aplicação
+      POSTGRES_PASSWORD: your_postgres_password_here # <-- MUDE ISTO! Senha para o usuário da aplicação
     volumes:
-      - oracle_data:/opt/oracle/oradata # Persistent data volume
-    healthcheck:
-      test: ["CMD-SHELL", "ls /opt/oracle/oradata/XE/system01.dbf"] # Check for a core DB file
-      interval: 10s
+      - postgres_data:/var/lib/postgresql/data # Volume persistente para os dados do DB
+      - ./db_init:/docker-entrypoint-initdb.d 
+    healthcheck: # Healthcheck para garantir que o DB está pronto
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
       timeout: 5s
       retries: 5
-      start_period: 60s # Give Oracle enough time to start
+      start_period: 30s
     restart: unless-stopped
 
   python-app:
     build:
-      context: . # Build context is the current directory (where Dockerfile is)
-      dockerfile: Dockerfile # Name of the Dockerfile for the Python app
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "5001:5000" # Flask default port
+      - "5001:5000" # Mapeamento de portas para acessar a aplicação
     environment:
-      # These environment variables will be injected into your Python app container
-      # For development, 'DB_HOST' is the name of the Oracle DB service in docker-compose
-      DB_USER: app_user
-      DB_PASSWORD: your_app_user_password_here # Use the same password as defined in oracle-db service
-      DB_HOST: oracle-db # This is the service name defined above in docker-compose
-      DB_PORT: 1521
-      DB_SERVICE_NAME: XEPDB1
+      # Variáveis de ambiente para a aplicação Python se conectar ao PostgreSQL
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: your_postgres_password_here # Use a mesma senha definida para o DB
+      POSTGRES_HOST: postgres-db # O nome do serviço Docker do banco de dados
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: megag_db
       FLASK_APP: app.py
-      FLASK_ENV: development # Set to 'production' for deployment
+      FLASK_ENV: development
+      FLASK_SECRET_KEY: 'sua_chave_secreta_muito_longa_e_aleatoria_para_o_flask' # <-- MUDE ISTO!
     volumes:
-      - .:/app # Mount your current project directory into the container for live updates
+      - .:/app # Monta a pasta do seu projeto local no contêiner para desenvolvimento
     depends_on:
-      oracle-db:
-        condition: service_healthy # Wait for the DB to be healthy before starting app
+      postgres-db:
+        condition: service_healthy # Garante que o DB esteja saudável antes de iniciar a aplicação
     restart: unless-stopped
 
 volumes:
-  oracle_data: # Define the named volume for persistent Oracle data
+  postgres_data: # Define o volume nomeado para a persistência dos dados do PostgreSQL

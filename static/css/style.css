@@ -1,0 +1,688 @@
+/* static/css/style.css */
+
+/* Variáveis CSS para suas cores */
+:root {
+    --header-height: 60px; /* Definindo uma variável para a altura do cabeçalho */
+    --color-light-gray-1: #f2f2f2; /* Fundo base */
+    --color-light-gray-2: #f1f1f1; /* Fundo de seção secundário */
+    --color-dark-purple-1: #610685; /* Roxo Profundo - Principal */
+    --color-dark-purple-2: #781685; /* Roxo Vivo - Destaque */
+    --color-dark-purple-3: #781c9c;
+    --color-dark-purple-4: #8f22bb; /* Roxo Vibrante */
+    --color-medium-purple: #67108a; /* Roxo Médio - Links/Ícones */
+    --color-dark-text: #1f1f1f; /* Quase Preto - Textos principais */
+    --color-white: #ffffff;
+    --color-gray-text: #666666; /* Texto secundário */
+    --color-light-text: #cccccc; /* Texto em fundos escuros */
+}
+
+/* Reset básico e tipografia */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* static/css/style.css (adicione no início, após o reset básico) */
+
+/* --- Cabeçalho Principal Fixo --- */
+.main-header {
+    background-color: var(--color-white); /* Fundo branco ou f1f1f1 */
+    padding: 10px 0;
+    position: fixed; /* Torna o cabeçalho fixo na tela */
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Garante que fique acima de outros conteúdos */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); /* Sombra sutil como no site de referência */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    height: var(--header-height); /* Dê uma altura fixa ao cabeçalho para cálculo */
+    display: flex; /* Garante que o padding e alinhamento funcionem bem */
+    align-items: center; /* Centraliza verticalmente o conteúdo */
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between; /* Alinha logo à esquerda, nav à direita */
+    align-items: center;
+    gap: 20px; /* Espaço entre a foto e o texto/logo */
+}
+
+.header-logo-img { /* Se você usar um logo de imagem */
+    height: 40px; /* Altura do logo */
+    width: auto;
+    display: block;
+}
+
+.logo-text {
+    font-size: 1.6em;
+    font-weight: 700;
+    color: var(--color-dark-purple-1); /* Cor da marca para o logo de texto */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-grow: 0; /* Permite que o texto/logo ocupe o espaço restante, empurrando o nav */
+    text-align: left; /* Alinha o texto do logo à esquerda se não houver nav */
+}
+
+/* --- Estilo da Navegação --- */
+.main-nav {
+    /* Para telas maiores, a navegação pode ocupar o espaço restante */
+    flex-grow: 1; /* Permite que a navegação ocupe o espaço restante */
+    display: flex;
+    justify-content: flex-end; /* Alinha os links do menu à direita */
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px; /* Espaço entre os itens do menu */
+}
+
+.main-nav a {
+    font-size: 1em;
+    color: var(--color-dark-text); /* Cor do texto do menu */
+    font-weight: 500;
+    padding: 5px 0;
+    position: relative;
+}
+
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--color-medium-purple);
+    transition: width 0.3s ease;
+}
+
+.main-nav a:hover::after {
+    width: 100%;
+}
+
+html {
+    scroll-behavior: smooth; /* Rolagem suave para navegação futura */
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.7; /* Melhorar legibilidade */
+    color: var(--color-gray-text);
+    background-color: var(--color-light-gray-1); /* Fundo muito claro */
+    overflow-x: hidden; /* Evitar scroll horizontal */
+    padding-top: var(--header-height); /* O corpo da página começa abaixo do cabeçalho */
+}
+
+/* Regra CRUCIAL para compensar o cabeçalho ao rolar para uma âncora */
+section[id] { /* Aplica-se a todas as seções que têm um ID (como about-me-section, etc.) */
+    scroll-margin-top: var(--header-height); /* Rolagem vai parar esta altura ANTES do ID */
+}
+
+.container {
+    max-width: 1100px; /* Alargado ligeiramente */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+a {
+    color: var(--color-medium-purple);
+    text-decoration: none;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+a:hover {
+    color: var(--color-dark-purple-4);
+    text-decoration: underline;
+}
+
+/* --- Seção Hero (Topo da Página) --- */
+.hero-section {
+    background: linear-gradient(135deg, var(--color-dark-purple-1) 0%, var(--color-dark-purple-2) 100%); /* Gradiente vibrante */
+    color: var(--color-white);
+    padding: 80px 20px 60px; /* Mais padding superior */
+    text-align: center;
+    min-height: 500px; /* Altura mínima para impacto visual */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative; /* Para possíveis efeitos de fundo */
+    overflow: hidden; /* Esconder transbordamento de animações */
+}
+
+.hero-section h1 {
+    font-size: 3.8em; /* Levemente menor para caber melhor, se necessário */
+    margin-bottom: 8px; /* Menos espaço abaixo do H1 */
+    color: var(--color-white);
+    font-weight: 700;
+    letter-spacing: -1px;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+}
+
+.hero-section h1 span {
+    color: var(--color-light-gray-2); /* Destaque sutil no nome */
+}
+
+.hero-section .tagline {
+    font-size: 1.8em; /* Levemente menor */
+    font-weight: 300;
+    color: var(--color-light-text);
+    margin-top: 10px; /* Mais espaço acima da tagline */
+    opacity: 0.9;
+}
+
+.header-profile-img {
+    width: 40px; /* Tamanho pequeno para o cabeçalho */
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-medium-purple); /* Borda mais fina */
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease; /* Animação ao passar o mouse */
+}
+
+.header-profile-img:hover {
+    transform: scale(1.1); /* Pequeno zoom ao passar o mouse */
+}
+
+/* --- Conteúdo Principal e Cards --- */
+.main-content {
+    padding: 60px 0; /* Mais padding geral */
+    background-color: var(--color-light-gray-2); /* Fundo de seção ligeiramente diferente */
+}
+
+.section-title {
+    font-size: 2.5em; /* Títulos de seção maiores */
+    color: var(--color-dark-text);
+    text-align: center;
+    margin-bottom: 50px; /* Mais espaço abaixo do título */
+    position: relative;
+    padding-bottom: 15px;
+    font-weight: 600;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px; /* Linha mais longa */
+    height: 4px; /* Linha mais grossa */
+    background: linear-gradient(to right, var(--color-medium-purple), var(--color-dark-purple-4)); /* Gradiente na linha */
+    border-radius: 2px;
+}
+
+.card {
+    background-color: var(--color-white);
+    padding: 40px; /* Mais padding interno */
+    border-radius: 12px; /* Cantos mais arredondados */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12); /* Sombra mais suave e proeminente */
+    margin-bottom: 40px;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transições para hover */
+    border-left: 5px solid var(--color-medium-purple); /* Linha lateral decorativa */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Efeito de "levantar" */
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card p {
+    font-size: 1.1em;
+    line-height: 1.8;
+}
+
+/* --- Seção de Habilidades --- */
+.skills-grid {
+    display: grid; /* Usar Grid para melhor controle */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* 2 ou mais colunas, responsivo */
+    gap: 15px; /* Espaçamento maior entre os itens */
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.skill-item {
+    background: linear-gradient(45deg, var(--color-medium-purple), var(--color-dark-purple-4)); /* Gradiente no item de habilidade */
+    color: var(--color-white);
+    padding: 12px 25px;
+    border-radius: 30px; /* Mais arredondado */
+    font-size: 1em;
+    font-weight: 600;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.skill-item:hover {
+    background: linear-gradient(45deg, var(--color-dark-purple-4), var(--color-dark-purple-1));
+    transform: scale(1.05); /* Pequeno zoom */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Seção de Contato --- */
+.contact-list {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+.contact-list li {
+    margin-bottom: 18px; /* Mais espaço */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px; /* Espaço entre ícone e texto */
+}
+
+.contact-list li a {
+    font-weight: 500;
+}
+
+/* Estilo para ícones Font Awesome */
+.contact-list .icon {
+    color: var(--color-medium-purple); /* Cor do ícone */
+    font-size: 1.5em; /* Tamanho do ícone */
+    width: 30px; /* Largura para alinhar */
+    text-align: center;
+    flex-shrink: 0; /* Impede que o ícone diminua */
+}
+
+/* --- Rodapé --- */
+.footer-section {
+    background-color: var(--color-dark-text);
+    color: var(--color-light-text);
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 0.95em;
+}
+
+.footer-section p {
+    margin-bottom: 0;
+}
+
+/* --- Mensagem de Erro --- */
+.error-container {
+    text-align: center;
+    padding: 50px;
+    background-color: var(--color-white);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin: 50px auto;
+    max-width: 600px;
+}
+
+.error-message {
+    color: var(--color-dark-purple-1); /* Usando a cor da sua paleta */
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+/* --- Animações (Mais suaves e impactantes) --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 1s ease-out forwards;
+}
+
+.animate-fade-in-slow {
+    animation: fadeIn 1.5s ease-out forwards;
+    animation-delay: 0.5s; /* Um pouco de atraso para a imagem */
+    opacity: 0;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+}
+
+.animate-slide-up-delay {
+    animation: slideUp 0.8s ease-out forwards;
+    opacity: 0; /* Começa invisível */
+}
+
+/* Adiciona um delay para cada card */
+.about-me-section.animate-slide-up-delay { animation-delay: 0.4s; }
+.skills-section.animate-slide-up-delay { animation-delay: 0.7s; }
+.contact-section.animate-slide-up-delay { animation-delay: 1.0s; }
+
+
+/* --- Responsividade (Ajustes para telas menores) --- */
+@media (max-width: 900px) {
+    .hero-section h1 {
+        font-size: 3em;
+    }
+
+    .hero-section .tagline {
+        font-size: 1.6em;
+    }
+
+    .section-title {
+        font-size: 2em;
+        margin-bottom: 30px;
+    }
+
+    .card {
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 10px;
+    }
+
+    .skill-item {
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
+
+    .contact-list li {
+        flex-direction: column; /* Empilha ícone e texto */
+        gap: 5px;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 500px) {
+    .hero-section {
+        padding: 60px 15px;
+    }
+    .hero-section h1 {
+        font-size: 2.2em;
+    }
+    .hero-section .tagline {
+        font-size: 1.2em;
+    }
+    .section-title {
+        font-size: 1.6em;
+    }
+    .card {
+        padding: 20px;
+    }
+    .profile-img {
+        width: 120px;
+        height: 120px;
+        border-width: 4px;
+        margin-top: 20px;
+    }
+}
+
+/* static/css/style.css (adicione no final) */
+
+/* --- Seção de Projetos --- */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Colunas flexíveis */
+    gap: 30px; /* Espaçamento entre os projetos */
+    margin-top: 25px;
+}
+
+.project-item {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-light-gray-1);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    overflow: hidden; /* Garante que a imagem fique dentro dos cantos arredondados */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column; /* Conteúdo em coluna */
+}
+
+.project-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.project-image-container {
+    width: 100%;
+    height: 200px; /* Altura fixa para as imagens */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-light-gray-2); /* Fundo para se a imagem for menor */
+}
+
+.project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Recorta a imagem para cobrir o container */
+    transition: transform 0.3s ease;
+}
+
+.project-item:hover .project-image {
+    transform: scale(1.05); /* Pequeno zoom na imagem ao passar o mouse */
+}
+
+.project-title {
+    font-size: 1.5em;
+    color: var(--color-dark-purple-1);
+    margin: 20px 20px 10px;
+    font-weight: 600;
+}
+
+.project-description {
+    font-size: 0.95em;
+    padding: 0 20px 15px;
+    flex-grow: 1; /* Permite que a descrição ocupe o espaço restante */
+}
+
+.project-tech {
+    font-size: 0.9em;
+    color: var(--color-gray-text);
+    padding: 0 20px 10px;
+}
+
+.project-tech span {
+    font-weight: bold;
+    color: var(--color-medium-purple);
+}
+
+.project-link {
+    display: inline-block;
+    background-color: var(--color-medium-purple);
+    color: var(--color-white);
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin: 10px 20px 20px;
+    text-align: center;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    align-self: flex-start; /* Alinha o botão à esquerda dentro do flex container */
+}
+
+.project-link:hover {
+    background-color: var(--color-dark-purple-4);
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+.project-link i {
+    margin-left: 8px;
+}
+
+/* Ajuste de animação de delay para a nova seção de projetos */
+.projects-section.animate-slide-up-delay { animation-delay: 1.3s; } /* Continua o delay */
+
+/* --- Seção de Experiência Profissional --- */
+.experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Espaço entre os itens de experiência */
+    margin-top: 20px;
+}
+
+.job-item {
+    background-color: var(--color-light-gray-2); /* Fundo levemente diferente para cada item */
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 4px solid var(--color-dark-purple-2); /* Borda decorativa */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.job-item:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+}
+
+.job-item h3 {
+    font-size: 1.6em;
+    color: var(--color-dark-purple-1);
+    margin-bottom: 5px;
+}
+
+.job-item .company-info {
+    font-size: 1.1em;
+    color: var(--color-dark-text);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.job-item .dates {
+    font-size: 0.95em;
+    color: var(--color-gray-text);
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.job-item .job-description {
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+/* Ajuste de animação de delay para a nova seção de experiência */
+.experience-section.animate-slide-up-delay { animation-delay: 1.6s; } /* Ajuste o delay para encaixar */
+
+
+/* static/css/style.css (adicione ou ajuste no cabeçalho ou nova seção) */
+
+/* --- Seletor de Idioma --- */
+.language-selector {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 20px; /* Espaço entre a navegação e o seletor */
+}
+
+.language-selector .current-flag {
+    width: 24px;
+    height: auto;
+    border: 1px solid var(--color-light-gray-1);
+    border-radius: 3px;
+}
+
+.language-arrow {
+    font-size: 0.8em;
+    color: var(--color-gray-text);
+    transition: transform 0.3s ease;
+}
+
+.language-dropdown {
+    list-style: none;
+    position: absolute;
+    top: calc(100% + 10px); /* Posição abaixo do seletor */
+    right: 0;
+    background-color: var(--color-white);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    min-width: 120px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    z-index: 1001; /* Acima do cabeçalho, se necessário */
+}
+
+.language-selector:hover .language-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.language-dropdown li {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-dark-text);
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+
+.language-dropdown li:hover {
+    background-color: var(--color-light-gray-1);
+}
+
+.language-dropdown li img {
+    width: 20px;
+    height: auto;
+    border: 1px solid var(--color-light-gray-1);
+    border-radius: 2px;
+}
+
+/* Responsividade para o seletor de idioma */
+@media (max-width: 768px) {
+    .language-selector {
+        margin-left: auto; /* Empurra para a direita em telas pequenas */
+        order: 2; /* Pode ajustar a ordem se os itens quebrarem linha */
+    }
+}
+
+/* Responsividade para experiência em telas menores */
+@media (max-width: 768px) {
+    .job-item {
+        padding: 20px;
+    }
+    .job-item h3 {
+        font-size: 1.4em;
+    }
+    .job-item .company-info {
+        font-size: 1em;
+    }
+}
+
+/* Responsividade para projetos em telas menores */
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr; /* Uma única coluna em telas pequenas */
+    }
+}
+
+/* --- Responsividade (Para o menu em telas pequenas) --- */
+@media (max-width: 768px) {
+    .header-content {
+        flex-wrap: wrap; /* Permite que os itens quebrem linha */
+        justify-content: center; /* Centraliza em telas pequenas */
+        gap: 10px;
+    }
+
+    .main-nav {
+        flex-basis: 100%; /* Menu ocupa toda a largura */
+        justify-content: center; /* Centraliza o menu em telas pequenas */
+        margin-top: 10px;
+    }
+
+    .main-nav ul {
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .logo-text, .header-logo {
+        margin-right: 0; /* Remove o empurrão para a direita em telas pequenas */
+    }
+}
